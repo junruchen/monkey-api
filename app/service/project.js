@@ -10,6 +10,7 @@ const { formatKey } = require('../util')
 class ProjectService extends Service {
   // 获取项目列表
   async all(params) {
+    // TODO: 全部列表数据获取不对！！！！ 关联m_project_user_mid表！！！
     const ctx = this.ctx
     const userId = params.type === 'all' ? '' : ctx.session.user.id
     const sort = params.desc === 'true' ? 'DESC' : 'ASC'

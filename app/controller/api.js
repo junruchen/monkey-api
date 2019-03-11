@@ -102,18 +102,25 @@ class APIController extends Controller {
   }
 
   // 用户测试自定义API
-  async testApi () {
+  async mApi() {
     const { ctx } = this
     const urlParams = ctx.params
-    const params =  {
+    const params = {
       path: '/' + urlParams.path,
       projectId: urlParams.projectId,
-      method: 'get'
+      method: ctx.method.toLowerCase()
     }
-    console.log('params--->', params)
-    const api = await ctx.service.api.find(params, 'get') // 使用get方法直接查询API
+    const api = await ctx.service.api.find(params, 'get')
     if (api) {
-      ctx.ok(api)
+      let recordData = {
+        apiId: api.id,
+        projectId: urlParams.projectId
+      }
+      const recordRes = await ctx.service.api.addRecord(recordData)
+      if (recordRes.affectedRows === 1) {
+        const response = api.response ? JSON.parse(api.response) : ''
+        ctx.mOk(response)
+      }
       return
     }
     ctx.fail('API不存在', APISTATUS.NOMATCH)

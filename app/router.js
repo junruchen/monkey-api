@@ -35,7 +35,7 @@ module.exports = app => {
   router.put(BASEURL + 'apis', controller.api.editApi)
 
    // 测试用户自定义接口 URL/m/projectId/context/apipath
-   router.all(USERTESTURL + ':projectId/:context/:path*', controller.api.testApi) // 访问用户自定义接口
+   router.all(USERTESTURL + ':projectId/:context/:path*', controller.api.mApi) // 访问用户自定义接口
 
   //
   // router.put(BASEURL + 'projects/:id', auth(), controller.project.editProject)

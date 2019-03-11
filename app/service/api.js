@@ -32,7 +32,6 @@ class APIService extends Service {
   async find(params, sqlType) {
     params = formatField(params)
     let api
-    console.log('------', sqlType)
     if (sqlType === 'get') {
       api = await this.app.mysql.get('m_apis', params)
     } else {
@@ -83,6 +82,12 @@ class APIService extends Service {
     data = formatField(data)
     data.last_modified = this.app.mysql.literals.now
     const result = await this.app.mysql.update('m_apis', data)
+    return result
+  }
+
+  // 添加测试记录，即测试API后，向m_api_use表中插入一条数据
+  async addRecord (data) {
+    const result = await this.app.mysql.insert('m_api_use', formatField(data))
     return result
   }
 }
